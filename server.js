@@ -75,7 +75,7 @@ app.get('/flight_info/:id', (req, res) => {
 });
 
 app.get('/passengers', (req, res) => {
-  db.query('SELECT * FROM users', (err, results) => {
+  db.query('SELECT * FROM passengers', (err, results) => {
     if (err) {
       console.error('Error fetching user data:', err);
       res.status(500).send('Error fetching user data');
