@@ -74,7 +74,16 @@ app.get('/flight_info/:id', (req, res) => {
   });
 });
 
-
+app.get('/passengers', (req, res) => {
+  db.query('SELECT * FROM users', (err, results) => {
+    if (err) {
+      console.error('Error fetching user data:', err);
+      res.status(500).send('Error fetching user data');
+    } else {
+      res.json(results);
+    }
+  });
+});
 // POST endpoint to save passenger information
 app.post('/passengers', (req, res) => {
   const { passengers } = req.body; // Expecting an array of passengers
