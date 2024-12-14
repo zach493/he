@@ -74,6 +74,34 @@ app.get('/flight_info/:id', (req, res) => {
   });
 });
 
+
+// POST endpoint to save passenger information
+app.post('/passengers', (req, res) => {
+  const { passengers } = req.body; // Expecting an array of passengers
+  const insertQueries = passengers.map(passenger => {
+    return new Promise((resolve, reject) => {
+      const { given_name, last_name, nationality, gender, email, birth_date, travel_class, flight_number, gate } = passenger;
+      const query = 'INSERT INTO passengers (given_name, last_name, nationality, gender, email, birth_date, travel_class, flight_number, gate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+      db.query(query, [given_name, last_name, nationality, gender, email, birth_date, travel_class, flight_number, gate], (err, result) => {
+        if (err) {
+          console.error('Error inserting passenger data:', err);
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  });
+
+  Promise.all(insertQueries)
+    .then(results => {
+      res.status(201).send({ message: 'Passengers added successfully', results });
+    })
+    .catch(error => {
+      res.status(500).send('Error inserting passenger data');
+    });
+});
+
 // POST endpoint to save passenger information
 app.post('/users', (req, res) => {
   const { passengers } = req.body; // Expecting an array of passengers
