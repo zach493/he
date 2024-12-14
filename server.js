@@ -89,9 +89,9 @@ app.post('/passengers', (req, res) => {
   const { passengers } = req.body; // Expecting an array of passengers
   const insertQueries = passengers.map(passenger => {
     return new Promise((resolve, reject) => {
-      const { given_name, nationality, gender, email, birth_date, travel_class, flight_number, gate } = passenger;
-      const query = 'INSERT INTO passengers (given_name, nationality, gender, email, birth_date, travel_class, flight_number, gate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-      db.query(query, [given_name, nationality, gender, email, birth_date, travel_class, flight_number, gate], (err, result) => {
+      const { given_name, nationality, gender, email, birthDate, travel_class, flight_number, gate } = passenger;
+      const query = 'INSERT INTO passengers (given_name, nationality, gender, email, birthDate, travel_class, flight_number, gate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+      db.query(query, [given_name, nationality, gender, email, birthDate, travel_class, flight_number, gate], (err, result) => {
         if (err) {
           console.error('Error inserting passenger data:', err);
           reject(err);
